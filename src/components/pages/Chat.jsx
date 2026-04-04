@@ -3,38 +3,20 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { BsChatSquareDotsFill } from "react-icons/bs";
 import { IoSend } from "react-icons/io5";
+import { useUser } from "@clerk/react";
 import UserTestIamge from "../../assets/UserTestImg.jpg";
 import BotTestIamge from "../../assets/AiBotTestImg.jpg";
 
-const Navbar = ({ onNewChat }) => {
-  const navigate = useNavigate();
-  return (
-    <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200 bg-white">
-      <div
-        className="flex items-center gap-2 cursor-pointer"
-        onClick={() => navigate("/")}
-      >
-        <img src={BotTestIamge} alt="" className="w-10 h-10 object-cover rounded-full" />
-        <h1 className="text-xl font-bold text-black">EChat</h1>
-      </div>
-      <button
-        onClick={onNewChat}
-        className="px-4 py-2 text-sm font-semibold text-white bg-black rounded-lg hover:bg-gray-800 transition-colors"
-      >
-        New Chat
-      </button>
-    </div>
-  );
-};
 
 const MessageBubble = ({ role, text }) => {
   const isUser = role === "user";
+  const { isSignedIn, user } = useUser();
   return (
     <div className={`flex w-full ${isUser ? "justify-end" : "justify-start"} mb-6`}>
       <div className={`flex w-full max-w-3xl gap-3 ${isUser ? "flex-row-reverse" : "flex-row"}`}>
         <div className="flex-shrink-0 flex items-end">
           <div className="w-8 h-8 rounded-full flex items-center justify-center bg-gray-200 text-black">
-            {isUser ? <img src={UserTestIamge} alt="" className="w-full h-full object-cover rounded-full" /> : <img src={BotTestIamge} alt="" className="w-full h-full object-cover rounded-full" />}
+            {isUser ? <img src={isSignedIn ? user.imageUrl : UserTestIamge} alt="" className="w-full h-full object-cover rounded-full" /> : <img src={BotTestIamge} alt="" className="w-full h-full object-cover rounded-full" />}
           </div>
         </div>
         <div className={`px-4 py-3 rounded-2xl ${isUser ? "bg-black text-white rounded-br-sm" : "bg-gray-100 text-black rounded-bl-sm"}`}>
@@ -157,7 +139,6 @@ export default function Chat() {
 
   return (
     <div className="flex flex-col h-screen bg-white">
-      <Navbar onNewChat={handleNewChat} />
 
       <div className="flex-1 overflow-y-auto px-4 py-6 md:px-10 lg:px-20">
         <div className="max-w-4xl mx-auto flex flex-col">
