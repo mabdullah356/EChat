@@ -4,7 +4,7 @@ import axios from "axios";
 import { BsChatSquareDotsFill } from "react-icons/bs";
 import { IoSend } from "react-icons/io5";
 import { useUser } from "@clerk/react";
-import UserTestIamge from "../../assets/UserTestImg.jpg";
+import UserTestIamge from "../../assets/userTestImg.jpg";
 import BotTestIamge from "../../assets/AiBotTestImg.jpg";
 
 
